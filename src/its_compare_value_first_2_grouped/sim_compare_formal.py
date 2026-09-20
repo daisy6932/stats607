@@ -120,6 +120,12 @@ def build_methods(args, rep_seed, groups, outdir):
 
 def run_one_rep(args, scenario, rep_seed, outdir):
     train, val, test, groups = generate_split(args, scenario, rep_seed)
+    # Preserve generated input splits separately from model artifacts.
+    split_dir = Path(args.out_base).parent / "data" / "processed"
+    split_dir.mkdir(parents=True, exist_ok=True)
+    for split_name, split in [("train", train), ("validation", val), ("test", test)]:
+        np.savez_compressed(split_dir / f"{scenario}_seed{rep_seed}_{split_name}.npz",
+                            **{key: np.asarray(value) for key, value in split.items()})
     Xtr = train["X"].cpu().numpy().astype(np.float32)
     Atr = train["A"].cpu().numpy().astype(np.int64)
     Ytr = train["y"].cpu().numpy().astype(np.float32)
