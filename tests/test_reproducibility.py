@@ -1,5 +1,6 @@
 """Data, policy-value, failure-path, and complete-pipeline validation."""
 import json
+import hashlib
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -51,6 +52,22 @@ def test_pipeline_from_scratch(tmp_path):
     table = pd.read_csv(tmp_path / "results/tables/policy_comparison.csv")
     assert set(table.method) == {"value_first_nn", "initial_nn", "ridge"}
     assert (table.n == 3).all()
+    metrics = pd.read_csv(tmp_path / "data/processed/policy_metrics.csv")
+    assert len(metrics) == 9
+    for row in table.itertuples():
+        values = metrics.loc[metrics.method == row.method, "regret"].to_numpy()
+        assert row.mean_regret == pytest.approx(sum(values) / 3)
+        expected_sd = (sum((v - sum(values) / 3) ** 2 for v in values) / 2) ** .5
+        assert row.sd_regret == pytest.approx(expected_sd)
     assert len(list((tmp_path / "data/processed").glob("*.npz"))) == 9
     assert (tmp_path / "results/figures/policy_regret.png").stat().st_size > 1000
     assert (tmp_path / "results/report/summary.md").is_file()
+
+
+def test_original_snapshot_matches_recorded_checksums():
+    """Verify preserved source integrity without accessing the research workspace."""
+    original = Path(__file__).resolve().parents[1] / "original"
+    manifest = json.loads((original / "MANIFEST.json").read_text())
+    assert len(manifest["files"]) == 27
+    for entry in manifest["files"]:
+        assert hashlib.sha256((original / entry["path"]).read_bytes()).hexdigest() == entry["sha256"]
