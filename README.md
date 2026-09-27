@@ -32,10 +32,10 @@ The single reproduction command is **`make reproduce`**. With the environment ac
 - `results/figures/policy_regret.png`: seed-level regret and method means.
 - `results/report/summary.md`: scope and interpretation.
 - `data/processed/policy_metrics.csv` and nine `.npz` files: generated metrics and train/validation/test data.
-- `artifacts/simulation/`: fitted models, original implementation diagnostics, and full run configuration.
+- `artifacts/simulation/`: original implementation diagnostics and full run configuration.
 - `artifacts/training.log`: detailed progress and any original plotting warnings.
 
-Generated outputs are present in this prepared working directory but ignored by Git. A clone recreates them with `make reproduce`; they are not precomputed dependencies. Numerical results should agree to floating-point tolerance across platforms; PNG bytes and exact neural training results are not guaranteed identical across all BLAS/hardware implementations.
+Generated outputs are ignored by Git. A clone recreates them with `make reproduce`; they are not precomputed dependencies. Numerical results should agree to floating-point tolerance across platforms; PNG bytes and exact neural training results are not guaranteed identical across all BLAS/hardware implementations.
 
 ## Repository map
 
@@ -45,7 +45,7 @@ config/                 experimental settings
 src/                    original reusable analysis plus new pipeline entry point
 data/raw/               input-source documentation (no external raw data)
 data/processed/         generated inputs and analysis-ready data
-artifacts/              intermediate computations, models and logs
+artifacts/              intermediate diagnostics, configuration and logs
 results/                final tables, figures and report
 tests/                  meaningful correctness, data and end-to-end tests
 docs/                   provenance, verification, reflection and submission notes
@@ -53,7 +53,7 @@ docs/                   provenance, verification, reflection and submission note
 
 ## Validation
 
-`make test` runs four tests, including an end-to-end execution into a new temporary directory. Tests do not rely on the working directory's existing results. Validation results are recorded in the final project documentation. Missing dependencies raise an import error naming the package; install the lock file into the active environment. Training failures include a log tail and return a nonzero status.
+`make test` runs five tests, including an end-to-end execution into a new temporary directory. Tests do not rely on the working directory's existing results. Validation results are recorded in the final project documentation. Missing dependencies raise an import error naming the package; install the lock file into the active environment. Training failures include a log tail and return a nonzero status.
 
 ## Original state and transformation
 
