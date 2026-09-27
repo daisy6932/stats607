@@ -1,62 +1,80 @@
-# ITR Phase 1: a reproducible NSCF simulation
+# Reproducible Individualized Treatment Rule Simulation
 
-Compare individualized treatment policies using the original neural supervised clustering implementation (NSCF), an initial neural Q model, and ridge regression. The experiment generates ten-treatment, two-group nonlinear synthetic data and evaluates policy regret on held-out synthetic outcomes.
+This project compares three individualized treatment policies: neural supervised clustering (NSCF), a neural Q model, and ridge regression. It reorganizes a selected analysis from the ITR Phase 1 research project into a reproducible pipeline for STATS 607 Unit 1.
 
-## Scope and data access
+## Analysis and data
 
-This is a small reproducibility demonstration (seeds 123–125, train/validation/test sizes 160/80/1000, 15 training epochs). It is not a replication of the full paper experiments, the 50-seed benchmark, or PDX analysis. Its short optimization budget may underfit the neural models; the resulting ranking does not establish comparative performance. No patient or restricted data are included.
+The simulation generates nonlinear synthetic outcomes with ten treatments in two true groups. It uses seeds 123–125 and 160 training, 80 validation, and 1,000 test observations per repetition. All inputs are generated from `config/experiment.json` and the included source code. No external datasets, patient records, credentials, or access permissions are required.
 
-All input data are generated from the committed `config/experiment.json` and source code. There are no data downloads, credentials, HPC accounts, or external local-file dependencies. `make reproduce` rebuilds from the earliest stage: synthetic data generation. A separate private-data/checkpoint command is therefore unnecessary.
+This intentionally small experiment uses a short training budget. It demonstrates reproducibility, not paper-scale performance. Three repetitions cannot establish general method rankings, and underfitting can affect the neural models. This repository does not reproduce the full paper or PDX real-data experiments.
 
-## Fresh setup and reproduction
+## Computational environment
 
-System prerequisites: Python **3.11**, Git, and Make on macOS or Linux (Windows: WSL). An internet connection is needed only to install packages. No R, GPU, Slurm, notebook server, or compiler is needed when compatible wheels are available. macOS arm64 was tested; other operating systems were not tested.
+System requirements: Python **3.11**, Git, and Make. The tested platform is macOS arm64. Linux and Windows through WSL have not been tested. No GPU, R, cluster account, or notebook server is needed. Internet access is required to install packages; reproduction itself runs offline.
 
-After cloning this repository and entering its root directory:
+From the cloned repository root:
 
 ```bash
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-lock.txt
-make reproduce
-make test
 ```
 
-`requirements.txt` lists the direct dependencies; `requirements-lock.txt` also pins the tested transitive dependencies. The environment itself is excluded from Git. For a platform with incompatible pinned wheels, resolve from the direct dependency file in a separate environment and record the resulting differences.
+`requirements.txt` pins direct dependencies. `requirements-lock.txt` also pins the transitive dependencies resolved on the tested platform. The environment itself is excluded from version control.
 
-The single reproduction command is **`make reproduce`**. With the environment activated, `python src/pipeline.py` is an equivalent entry point. Without activation, use `make reproduce PYTHON=.venv/bin/python`. The pipeline logs progress and overwrites its designated generated outputs on each run. No manual edits are required. Installation time is excluded from the runtime observations in the final project documentation.
+## Reproduce the results
+
+With the environment activated, run:
+
+```bash
+make reproduce
+```
+
+This command generates the synthetic inputs, trains the three policies, validates the results, and writes the final outputs. It requires no manual code edits or interactive input. Seeds, CPU execution, and numerical thread counts are fixed. Progress appears in the terminal; detailed training output is saved to `artifacts/training.log`. Missing dependencies or failed training cause a nonzero exit status with diagnostic information.
+
+Each run overwrites the designated generated outputs. On the tested computer, warm runs take seconds; initial imports and font-cache creation can take longer. Cross-platform floating-point and neural-training results need not be bitwise identical.
 
 ## Outputs
 
-- `results/tables/policy_comparison.csv`: 3 methods, 3 repetitions each; means and sample standard deviations.
-- `results/figures/policy_regret.png`: seed-level regret and method means.
-- `results/report/summary.md`: scope and interpretation.
-- `data/processed/policy_metrics.csv` and nine `.npz` files: generated metrics and train/validation/test data.
-- `artifacts/simulation/`: original implementation diagnostics and full run configuration.
-- `artifacts/training.log`: detailed progress and any original plotting warnings.
+| File | Contents |
+|---|---|
+| `results/tables/policy_comparison.csv` | Mean policy regret, sample standard deviation, mean value, and optimal-action accuracy for three methods |
+| `results/figures/policy_regret.png` | Regret for each seed and the mean for each method |
+| `results/report/summary.md` | Experimental scope and interpretation |
+| `data/processed/policy_metrics.csv` | Nine seed-by-method observations |
+| `data/processed/*.npz` | Generated training, validation, and test data for all three repetitions |
+| `artifacts/simulation/` | Intermediate diagnostics and the full runtime configuration |
 
-Generated outputs are ignored by Git. A clone recreates them with `make reproduce`; they are not precomputed dependencies. Numerical results should agree to floating-point tolerance across platforms; PNG bytes and exact neural training results are not guaranteed identical across all BLAS/hardware implementations.
+Regret is the oracle policy value minus the estimated policy's value on synthetic test outcomes. Lower regret is better. Reported standard deviations describe variation across seeds; they are not confidence intervals.
 
-## Repository map
+Generated data, diagnostics, and results are ignored by Git and regenerated by `make reproduce`. No precomputed result is needed as an input.
 
-```text
-original/               untouched selected source snapshot + SHA-256 manifest
-config/                 experimental settings
-src/                    original reusable analysis plus new pipeline entry point
-data/raw/               input-source documentation (no external raw data)
-data/processed/         generated inputs and analysis-ready data
-artifacts/              intermediate diagnostics, configuration and logs
-results/                final tables, figures and report
-tests/                  meaningful correctness, data and end-to-end tests
-docs/                   provenance, verification, reflection and submission notes
+## Tests
+
+```bash
+make test
 ```
 
-## Validation
+Five tests cover known-answer policy values and tied optimal actions; synthetic-data shapes, ranges and same-seed regeneration; rejection of invalid result tables; end-to-end execution with independent summary-statistic checks; and integrity of the preserved source snapshot. End-to-end validation writes to a new temporary directory and does not depend on existing results. See [validation](docs/validation.md) for the verification record.
 
-`make test` runs five tests, including an end-to-end execution into a new temporary directory. Tests do not rely on the working directory's existing results. Validation results are recorded in the final project documentation. Missing dependencies raise an import error naming the package; install the lock file into the active environment. Training failures include a log tail and return a nonzero status.
+## Project structure
 
-## Original state and transformation
+```text
+original/               preserved original-analysis snapshot and checksums
+config/                 fixed experimental settings
+src/                    reusable analysis code and pipeline entry point
+data/raw/               documentation of the synthetic input source
+data/processed/         generated data and analysis-ready metrics
+artifacts/              intermediate diagnostics, configuration and logs
+results/                final tables, figures and report
+tests/                  correctness, data and pipeline validation
+docs/                   provenance and validation record
+```
 
-The original source directory had no Git repository. The first commit preserves the **selected analysis**, not a copy of the entire research workspace. Original commit: `a478fdc116cbcd6fb5f261b2560909955f4ac792` (tag `original`). `original/MANIFEST.json` records source locations and exact content checksums. Absolute source locations are provenance only and are never read by the reproduction command.
+## Original analysis and version history
 
-Later focused commits separate the project structure, add automation and tests, and document verification. Use `git log --oneline` to inspect them. See `docs/provenance.md` for changes from the snapshot. The other functions in the preserved research module are outside the designated course pipeline and its dependency/test contract.
+The first commit preserves the selected original analysis and is tagged `original`:
+
+`a478fdc116cbcd6fb5f261b2560909955f4ac792`
+
+The published snapshot translates five source comments into English without changing executable Python syntax. Its manifest records both source-file and exported-file hashes. Subsequent commits record project organization, dependency pinning, automation, and validation. See [provenance](docs/provenance.md) for details. Files under `original/` are archival; use the commands in this README to run the course analysis.
