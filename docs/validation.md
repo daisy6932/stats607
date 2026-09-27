@@ -13,3 +13,5 @@ Five tests validate:
 5. SHA-256 integrity of all 27 files in the original-analysis snapshot.
 
 The Codex filesystem sandbox restricts OpenMP shared memory and can interrupt the nested training process during testing. Full tests are run outside that sandbox. Initial font-cache and auxiliary diagnostic-plot layout warnings do not prevent generation of the designated final figure. Cross-platform execution and paper-scale statistical claims have not been validated.
+
+The English-language publication export was revalidated before upload: all five tests passed, and the regenerated summary table matched the earlier tested project within `1e-10`.
