@@ -20,3 +20,5 @@ make test
 ```
 
 The reproduction command is `make reproduce`, run inside the project folder after environment setup. The `original` tag preserves the initial analysis before restructuring. Earlier commits place the project at the repository root; the latest structure groups it under its project name.
+
+For a fresh run followed by an automatic comparison with the committed numerical reference, run `make compare` inside the project folder. The project also contains a short [reflection](project1-reproducible-individualized-treatment-rule-simulation/docs/reflection.md).

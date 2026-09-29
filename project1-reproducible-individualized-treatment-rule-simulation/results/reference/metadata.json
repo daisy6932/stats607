@@ -1,0 +1,40 @@
+{
+  "created": "2026-09-29",
+  "python": "3.11.15",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "config": {
+    "seed0": 123,
+    "n_reps": 3,
+    "scenarios": "grouped_nonlinear_hard",
+    "scenario": "grouped_nonlinear_hard",
+    "groups": "0,1,2,3,4|5,6,7,8,9",
+    "n_train": 160,
+    "n_val": 80,
+    "n_test": 1000,
+    "n_features": 10,
+    "n_actions": 10,
+    "train_epochs": 15,
+    "alt_cycles": 1,
+    "admm_epochs": 5,
+    "penalty": "l1",
+    "num_lambda": 3,
+    "refit_select_epochs": 10,
+    "rf_n_jobs": 1,
+    "methods": "value_first_nn,initial_nn,ridge",
+    "global_seed": 123,
+    "seed_train": 0,
+    "seed_val": 1000,
+    "seed_test": 2000,
+    "baseline_scale": 1.0,
+    "effect_scale": 1.5,
+    "hidden1": 32,
+    "eval_every": 5,
+    "deterministic": true
+  },
+  "config_sha256": "c4c92249c39368c18dbdeda306058543b65e9b85812e45b0da09c6619441895b",
+  "requirements_lock_sha256": "8ae569665d01c51719136270cbc6c15f53497a3b97e66d90de121c4eda55c2fc",
+  "comparison": {
+    "rtol": 1e-05,
+    "atol": 1e-07
+  }
+}

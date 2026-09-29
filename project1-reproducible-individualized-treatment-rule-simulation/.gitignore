@@ -10,3 +10,10 @@ data/processed/*
 !data/processed/.gitkeep
 results/*/*
 !results/*/.gitkeep
+!artifacts/README.md
+!results/tables/policy_comparison.csv
+!results/figures/policy_regret.png
+!results/report/summary.md
+!results/reference/policy_comparison.csv
+!results/reference/README.md
+!results/reference/metadata.json
