@@ -88,7 +88,7 @@ The first commit preserves the selected original analysis and is tagged `origina
 
 `a478fdc116cbcd6fb5f261b2560909955f4ac792`
 
-The published snapshot translates five source comments into English without changing executable Python syntax. Its manifest records both source-file and exported-file hashes. Subsequent commits record project organization, dependency pinning, automation, and validation. See [provenance](docs/provenance.md) for details. Files under `original/` are archival; use the commands in this README to run the course analysis.
+The published snapshot translates five source comments into English without changing executable Python syntax. Its manifest records both source-file and exported-file hashes. Subsequent commits record project organization, dependency pinning, automation, and validation. See [provenance](docs/provenance.md) for details. The current archive omits the supplement README and dependency file and places the two packages directly under `original/`; the original commit retains the historical layout. This later layout adjustment is documented in the provenance record. Files under `original/` are archival; use the commands in this README to run the course analysis.
 
 ## Reflection
 

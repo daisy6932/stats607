@@ -67,7 +67,7 @@ def test_pipeline_from_scratch(tmp_path):
 def test_original_snapshot_matches_recorded_checksums():
     """Verify preserved source integrity without accessing the research workspace."""
     original = Path(__file__).resolve().parents[1] / "original"
-    manifest = json.loads((original / "MANIFEST.json").read_text())
-    assert len(manifest["files"]) == 27
+    manifest = json.loads((original.parent / "docs/original-manifest.json").read_text())
+    assert len(manifest["files"]) == 25
     for entry in manifest["files"]:
         assert hashlib.sha256((original / entry["path"]).read_bytes()).hexdigest() == entry["sha256"]
