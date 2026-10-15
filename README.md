@@ -25,4 +25,4 @@ For a fresh run followed by an automatic comparison with the committed numerical
 
 ## Project 2 — Simulation Study
 
-See [`project2/`](project2/) for the assignment checklist, proposed workflow, and planning templates. The study is not yet implemented.
+See [`project2/`](project2/) for the Storey (2002) simulation reproduction, ADEMP design, critical analysis, figures, and tests. Run `make all` and `make test` inside that folder after environment setup.

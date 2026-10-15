@@ -1,0 +1,55 @@
+{
+  "config": {
+    "seed": 6072026,
+    "m": 1000,
+    "effect": 2.0,
+    "replicates": 1000,
+    "lambda": 0.5,
+    "gammas": [
+      0.01,
+      0.001
+    ],
+    "pi0_values": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9
+    ],
+    "modes": [
+      "fixed",
+      "iid"
+    ],
+    "boundary_pi0": [
+      0.0,
+      1.0
+    ],
+    "baseline_alpha": 0.05
+  },
+  "config_path": "config/study.json",
+  "config_sha256": "e148fecc5b5ee721a29e59907b0ce2c873d46e19219c07a2a33115d59a04ec75",
+  "source_sha256": {
+    "src/__init__.py": "847bb1279bf7b6cdfe48ab6d70e1443b1ec106b1b8cb4c8531d4179b7dd8b552",
+    "src/analyze.py": "7a95e4791c1c8153da009c7b9cbd8a7e074b1e4901726682e85bcd4a439e2bed",
+    "src/dgps.py": "04932f38aff324505ae14ba7ebd082631b88cd70e4e64e6565374caec7502858",
+    "src/figures.py": "f0af5a7af22861914d4df09db634f8256f4c907bda4951dd16cafcf27cbf7f9b",
+    "src/methods.py": "405ac776cb6153fbe6c9bcdf0f702924fa931a3405e9a05c93bc130a49bfa9bc",
+    "src/metrics.py": "f090ba8b2e1cc0576dc6a7dc136ac4cbc51a8a29fb02e93b52af03ad8c57eb32",
+    "src/simulation.py": "851d8fdf7b290d941f4c9fa6f9f51e9484ee7cd6c83f618477c96f17a736030e"
+  },
+  "python": "3.13.12",
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "2.3.3",
+    "matplotlib": "3.11.2",
+    "pytest": "9.1.1"
+  },
+  "seconds": 4.832242832999327,
+  "rows": 120000,
+  "raw_sha256": "d4a858ccfd5f5c36426af3e83003374432fa7354e9b4896ff1fef17e6772f835"
+}
