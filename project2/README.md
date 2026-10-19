@@ -104,4 +104,4 @@ project2/
 
 ## Submission status
 
-The code, documentation, results and tests are implemented. Review the analysis before submitting. The course requires a **publicly accessible repository URL**; the existing `daisy6932/stats607` repository is currently private and must be made public, or an approved public submission location must be arranged. No visibility change has been made. The assignment filename lists October 21 at 11 pm; confirm the deadline timezone on the course site.
+The code, documentation, results and tests are implemented. The repository was made **public** on 2026-10-19. Submit the [Project 2 URL](https://github.com/daisy6932/stats607/tree/main/project2) and upload `ANALYSIS.md` separately on the course site. Course-site submission has not been performed. The assignment filename lists October 21 at 11 pm; confirm the deadline timezone on the course site.

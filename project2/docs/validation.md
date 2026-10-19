@@ -38,3 +38,7 @@ Fresh-output verification: exported the committed project with git archive into 
 Every regenerated top-level result CSV and the compressed raw replicate file matched the committed version byte-for-byte. Raw SHA-256: `d4a858ccfd5f5c36426af3e83003374432fa7354e9b4896ff1fef17e6772f835`. `pip check` also reports no broken requirements. The source and remote commit matched before this documentation-only audit update.
 
 The unresolved published BH entry is a documented reproduction difference, not a missing assignment component. Full reproduction of all sections of Storey's paper is not claimed; the project explicitly scopes its reproduction to Section 5.
+
+## Public-access update — 2026-10-19
+
+At the user's explicit request, the repository was changed to PUBLIC. The GitHub API confirmed the new visibility. This resolves the public-repository requirement noted in the audits above. Course-site submission and separate ANALYSIS.md upload remain for the student.
