@@ -12,7 +12,7 @@ Storey feeds the estimated FDR for a fixed rejection region into BH on the same 
 
 The design is favorable to tail-based null-proportion estimation: independent tests, uniform null p-values, and a common, fairly strong positive normal alternative. Table 2 compares against the original BH procedure. The adaptive method of [Benjamini and Hochberg (2000)](https://doi.org/10.3102/10769986025001060) would offer another comparison because it also estimates the number of true nulls. Dependence, weak or heterogeneous signals, two-sided tests, and invalid null p-values are absent. Those omissions matter in genomics, where correlated measurements and varied effect sizes are common.
 
-The new power plot reproduces the paper's Figure 1 concept while overlaying original points and Monte Carlo intervals. The bias diagnostic exposes residual contamination of large p-values by alternatives. Before clipping, E(pi0_hat)=pi0+2*(1-pi0)*Phi(-2), so the bias near pi0=0.1 is about 0.041, despite close agreement with the original table. The empirical-FDR plot makes unequal error rates visible, which a power-only display cannot show.
+The new power plot reproduces the paper's Figure 1 concept while overlaying original points and Monte Carlo intervals. The bias diagnostic exposes residual contamination of large p-values by alternatives. At pi0=0.1, the estimated null proportion is about 0.041 too high despite close agreement with the original table. The empirical-FDR plot makes unequal error rates visible, which a power-only display cannot show.
 
 ## Confidence, implementation and next steps
 

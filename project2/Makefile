@@ -36,6 +36,6 @@ smoke:
 	$(MAKE) all CONFIG=config/smoke.json OUTPUT=tmp/smoke
 
 clean:
-	rm -rf results/raw results/figures tmp/smoke
+	rm -rf results/raw results/figures tmp/smoke tmp/followup
 	rm -f results/summary.csv results/diagnostics.csv results/paired_power.csv \
 		results/design_matrix.csv results/table2_comparison.csv results/pi0_expectation.csv
