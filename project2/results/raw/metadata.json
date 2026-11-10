@@ -39,7 +39,7 @@
     "src/figures.py": "af33465f823670a51c39ad9d6947484eb81739bcc87016902540877680cc739f",
     "src/methods.py": "41df74cc2da8943793bb10ed18d0936484c6938cb2d70c84443ed246dd10c16e",
     "src/metrics.py": "823a462c83235c9571ecc2e92bed299c03a267e619e7a46f983cab0f2f84eefc",
-    "src/simulation.py": "3fd6a10041ee433ad0281398cc3e5682d59e7491c54f7d135f7a5a9519b26b5c"
+    "src/simulation.py": "cb40163cf766575b9e8462c1c00f8882bf0d1f6d0a7e80925bf2576da4e317bd"
   },
   "python": "3.11.18",
   "versions": {
@@ -49,7 +49,7 @@
     "matplotlib": "3.9.0",
     "pytest": "8.3.0"
   },
-  "seconds": 4.832604749999973,
+  "seconds": 5.323267541999485,
   "rows": 120000,
   "raw_sha256": "d4a858ccfd5f5c36426af3e83003374432fa7354e9b4896ff1fef17e6772f835"
 }

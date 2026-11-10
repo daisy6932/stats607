@@ -45,7 +45,7 @@ def load_config(path):
     }:
         raise ValueError("invalid modes")
     if len(config["gammas"]) != len(set(config["gammas"])) or any(
-        not 0 < g < 1 for g in config["gammas"]
+        not 0 < gamma < 1 for gamma in config["gammas"]
     ):
         raise ValueError("invalid gamma values")
     if not 0 <= config["lambda"] < 1 or not 0 <= config["baseline_alpha"] <= 1:

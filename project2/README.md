@@ -4,9 +4,13 @@ A reproducible simulation study of false discovery rate estimation and power, re
 
 The main study uses 18 conditions from Table 2. Additional runs vary how null labels are assigned and check the all-null and all-alternative cases.
 
-**Key findings:** Storey's power was about 0.372 and 0.138 at the two thresholds.
-Its higher power came with higher observed FDR, so the comparison does not show
-an advantage at equal FDR.
+[ADEMP.md](ADEMP.md) explains the design and [config/study.json](config/study.json)
+defines the conditions. In each replicate the paper's BH comparator uses Storey's
+FDR estimate as its input level. The study also includes BH at a fixed level of 0.05.
+
+**Key findings:** The simulation closely reproduces Table 2 except for one BH
+power entry (about 0.113 here, 0.129 in the paper). Storey's higher power came
+with higher observed FDR, so the comparison does not show an advantage at equal FDR.
 
 ## Run the study
 
@@ -20,24 +24,20 @@ make test
 
 Use Python 3.11 or later. `make all` creates `.venv`, installs dependencies,
 and runs the study. Select an interpreter with `make all PYTHON_BIN=python3.11`.
-Use a separate environment for the original locked packages:
-`make all PYTHON_BIN=python3.13 VENV=.venv-locked REQUIREMENTS=requirements-lock.txt`.
 
 Clean runs passed on macOS ARM64 with Python 3.11.18 (at the dependency
 minimums) and 3.15.2. A full study run takes about 8–15 seconds after setup.
 
 | Command | Output |
 |---|---|
+| `make all` | Set up the environment, run the simulation, and generate tables and figures |
+| `make test` | Run the test suite |
 | `make setup` | Create the environment and install dependencies |
 | `make simulate` | Replicate data and run metadata |
 | `make analyze` | Summary tables and Table 2 comparison |
 | `make figures` | Four figures in PNG and SVG |
 | `make smoke` | Small complete run in `tmp/smoke/` |
 | `make clean` | Removes generated results and keeps the Table 2 reference |
-
-[ADEMP.md](ADEMP.md) explains the design and [config/study.json](config/study.json)
-defines the conditions. In each replicate the paper's BH comparator uses Storey's
-FDR estimate as its input level. The study also includes BH at a fixed level of 0.05.
 
 To rerun the 10,000-replicate check at `pi0=0.8` and `gamma=0.001`:
 
@@ -68,7 +68,7 @@ Additional figures show [empirical FDR](results/figures/empirical_fdr.png) and [
 
 ```text
 project2/
-├── config/                 # full and smoke JSON designs
+├── config/                 # main, smoke, and follow-up configurations
 ├── data/simulated/         # optional simulation cache
 ├── docs/                   # output column guide
 ├── src/
