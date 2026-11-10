@@ -1,0 +1,90 @@
+{
+  "runs": [
+    {
+      "engine": "baseline",
+      "trial": 1,
+      "simulate": 5.43037516700133,
+      "simulate_warnings": [],
+      "analyze": 0.7971350419975352,
+      "analyze_warnings": [],
+      "figures": 0.8374139160005143,
+      "figures_warnings": [
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'"
+      ],
+      "total": 7.064924124999379
+    },
+    {
+      "engine": "baseline",
+      "trial": 2,
+      "simulate": 5.431964082999912,
+      "simulate_warnings": [],
+      "analyze": 0.7936350000018138,
+      "analyze_warnings": [],
+      "figures": 0.8400540000002366,
+      "figures_warnings": [
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'"
+      ],
+      "total": 7.065653083001962
+    },
+    {
+      "engine": "baseline",
+      "trial": 3,
+      "simulate": 5.45885724999971,
+      "simulate_warnings": [],
+      "analyze": 0.789984666997043,
+      "analyze_warnings": [],
+      "figures": 0.8429459580002003,
+      "figures_warnings": [
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+        "/tmp/p2-audit-311.wwARCW/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'"
+      ],
+      "total": 7.091787874996953
+    }
+  ],
+  "medians": {
+    "baseline": {
+      "simulate": 5.431964082999912,
+      "analyze": 0.7936350000018138,
+      "figures": 0.8400540000002366,
+      "total": 7.065653083001962
+    }
+  }
+}

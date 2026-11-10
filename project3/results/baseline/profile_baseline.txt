@@ -1,0 +1,64 @@
+         7997221 function calls (7997177 primitive calls) in 4.402 seconds
+
+   Ordered by: cumulative time
+   List reduced from 207 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.010    0.010    4.402    4.402 performance.py:30(timed_study)
+        1    0.103    0.103    4.392    4.392 simulation.py:65(run_study)
+    80000    0.457    0.000    2.387    0.000 methods.py:43(bh)
+   160003    0.035    0.000    1.244    0.000 fromnumeric.py:51(_wrapfunc)
+    80003    0.019    0.000    1.215    0.000 fromnumeric.py:1085(argsort)
+    80003    1.172    0.000    1.172    0.000 {method 'argsort' of 'numpy.ndarray' objects}
+    20000    0.160    0.000    0.845    0.000 dgps.py:15(generate_normal_tests)
+    20000    0.180    0.000    0.679    0.000 _distn_infrastructure.py:2128(sf)
+   120000    0.284    0.000    0.598    0.000 methods.py:6(validate_pvalues)
+    40000    0.118    0.000    0.391    0.000 methods.py:18(storey_fixed)
+   120000    0.179    0.000    0.381    0.000 metrics.py:8(rejection_metrics)
+   597823    0.323    0.000    0.323    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+   280000    0.109    0.000    0.289    0.000 fromnumeric.py:89(_wrapreduction_any_all)
+    20000    0.003    0.000    0.200    0.000 _continuous_distns.py:374(_sf)
+    20000    0.012    0.000    0.197    0.000 _continuous_distns.py:320(_norm_sf)
+    20000    0.185    0.000    0.185    0.000 _continuous_distns.py:308(_norm_cdf)
+   140000    0.031    0.000    0.177    0.000 fromnumeric.py:2513(all)
+   140000    0.030    0.000    0.173    0.000 fromnumeric.py:2400(any)
+   160000    0.021    0.000    0.158    0.000 {method 'sum' of 'numpy.ndarray' objects}
+    80000    0.041    0.000    0.152    0.000 numeric.py:658(flatnonzero)
+    20000    0.084    0.000    0.144    0.000 dgps.py:7(replicate_rng)
+   160000    0.018    0.000    0.137    0.000 _methods.py:50(_sum)
+        1    0.000    0.000    0.135    0.135 frame.py:694(__init__)
+        1    0.000    0.000    0.122    0.122 construction.py:506(nested_data_to_arrays)
+        1    0.000    0.000    0.122    0.122 construction.py:793(to_arrays)
+    20000    0.027    0.000    0.122    0.000 _distn_infrastructure.py:561(argsreduce)
+    20000    0.038    0.000    0.068    0.000 _distn_infrastructure.py:982(_open_support_mask)
+        1    0.000    0.000    0.063    0.063 construction.py:928(_finalize_columns_and_data)
+        1    0.000    0.000    0.063    0.063 construction.py:1006(convert_object_array)
+        1    0.000    0.000    0.063    0.063 construction.py:1070(<listcomp>)
+
+
+         7997221 function calls (7997177 primitive calls) in 4.402 seconds
+
+   Ordered by: internal time
+   List reduced from 207 to 20 due to restriction <20>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    80003    1.172    0.000    1.172    0.000 {method 'argsort' of 'numpy.ndarray' objects}
+    80000    0.457    0.000    2.387    0.000 methods.py:43(bh)
+   597823    0.323    0.000    0.323    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+   120000    0.284    0.000    0.598    0.000 methods.py:6(validate_pvalues)
+    20000    0.185    0.000    0.185    0.000 _continuous_distns.py:308(_norm_cdf)
+    20000    0.180    0.000    0.679    0.000 _distn_infrastructure.py:2128(sf)
+   120000    0.179    0.000    0.381    0.000 metrics.py:8(rejection_metrics)
+    20000    0.160    0.000    0.845    0.000 dgps.py:15(generate_normal_tests)
+    40000    0.118    0.000    0.391    0.000 methods.py:18(storey_fixed)
+   280000    0.109    0.000    0.289    0.000 fromnumeric.py:89(_wrapreduction_any_all)
+        1    0.103    0.103    4.392    4.392 simulation.py:65(run_study)
+    20000    0.084    0.000    0.144    0.000 dgps.py:7(replicate_rng)
+       22    0.063    0.003    0.063    0.003 construction.py:1028(convert)
+    60000    0.048    0.000    0.048    0.000 {built-in method numpy._core._multiarray_umath._place}
+    20000    0.045    0.000    0.051    0.000 _ufunc_config.py:434(inner)
+   280000    0.041    0.000    0.041    0.000 fromnumeric.py:91(<dictcomp>)
+    80000    0.041    0.000    0.152    0.000 numeric.py:658(flatnonzero)
+    20000    0.038    0.000    0.068    0.000 _distn_infrastructure.py:982(_open_support_mask)
+   160003    0.035    0.000    1.244    0.000 fromnumeric.py:51(_wrapfunc)
+   280000    0.033    0.000    0.058    0.000 numeric.py:460(count_nonzero)
