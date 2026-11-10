@@ -2,9 +2,11 @@
 
 A reproducible simulation study of false discovery rate estimation and power, reproducing Section 5, Table 2 and Figure 1 of [Storey (2002), *A direct approach to false discovery rates*](https://genomics.princeton.edu/storeylab/papers/directfdr.pdf), using the [author's errata](https://genomics.princeton.edu/storeylab/papers/directfdr_corrections.pdf) to guide the label sensitivity analysis.
 
-The primary reproduction has 18 conditions: independent normal tests, 1000 hypotheses per replicate, 1000 replicates, alternative mean 2, lambda=0.5, pi0=0.1,…,0.9, and gamma=0.01/0.001. An additional 18 conditions use random labels; four boundary conditions check all-null/all-alternative behavior. There are 20,000 independent generated datasets, shared across the two gamma thresholds, and 120,000 method-level raw rows.
+The main study uses 18 conditions from Table 2. Additional runs vary how null labels are assigned and check the all-null and all-alternative cases.
 
-**Key findings:** Storey's fixed-region power is approximately 0.372 and 0.138 for the two thresholds, reproducing the paper's main pattern; one printed BH power entry differs materially. The paper's BH comparator uses a same-data estimated level, and observed FDR differs between methods, so the power advantage does not establish superiority at matched realized FDR.
+**Key findings:** Storey's power was about 0.372 and 0.138 at the two thresholds.
+Its higher power came with higher observed FDR, so the comparison does not show
+an advantage at equal FDR.
 
 ## Run the study
 
@@ -12,21 +14,21 @@ From the repository root:
 
 ```bash
 cd project2
-make setup
 make all
 make test
 ```
 
-Setup creates `.venv`. Clean installs and full runs passed on Python 3.13.12
-and 3.15.2 on macOS ARM64. To select an interpreter, run
-`make setup PYTHON_BIN=python3.13`. For the original Python 3.13 package versions,
-use `make setup PYTHON_BIN=python3.13 REQUIREMENTS=requirements-lock.txt VENV=.venv-locked`
-and `make all VENV=.venv-locked`.
+Use Python 3.11 or later. `make all` creates `.venv`, installs dependencies,
+and runs the study. Select an interpreter with `make all PYTHON_BIN=python3.11`.
+Use a separate environment for the original locked packages:
+`make all PYTHON_BIN=python3.13 VENV=.venv-locked REQUIREMENTS=requirements-lock.txt`.
 
-A clean simulation, analysis, and figure run takes about 8–15 seconds on macOS ARM64, excluding dependency installation and first-time font setup.
+Clean runs passed on macOS ARM64 with Python 3.11.18 (at the dependency
+minimums) and 3.15.2. A full study run takes about 8–15 seconds after setup.
 
 | Command | Output |
 |---|---|
+| `make setup` | Create the environment and install dependencies |
 | `make simulate` | Replicate data and run metadata |
 | `make analyze` | Summary tables and Table 2 comparison |
 | `make figures` | Four figures in PNG and SVG |
@@ -39,13 +41,9 @@ FDR estimate as its input level. The study also includes BH at a fixed level of 
 
 ## Outputs
 
-- [ANALYSIS.md](ANALYSIS.md): critical analysis, including discrepancies and limitations; upload separately as required.
-- [results/table2_comparison.csv](results/table2_comparison.csv): all six numerical columns compared with the transcribed published values, with differences and Monte Carlo standard errors.
-- [results/summary.csv](results/summary.csv): power, empirical FDR/pFDR, cutoff and rejection count summaries with valid sample sizes and pointwise 95% Monte Carlo intervals.
-- [results/diagnostics.csv](results/diagnostics.csv): bias, RMSE and clipping diagnostics.
-- [results/paired_power.csv](results/paired_power.csv): within-dataset power differences and Monte Carlo uncertainty.
-- [results/design_matrix.csv](results/design_matrix.csv): one row per simulation condition.
-- [results/raw/](results/raw/): replicate-level CSV and provenance; [schema](docs/output_schema.md).
+- [Critical analysis](ANALYSIS.md)
+- [Table 2 comparison](results/table2_comparison.csv) and [summary results](results/summary.csv)
+- [Raw replicate data and metadata](results/raw/) ([column guide](docs/output_schema.md))
 
 ### Publication figure: power reproduction
 
@@ -55,15 +53,15 @@ FDR estimate as its input level. The study also includes BH at a fixed level of 
 
 ![Bias of null-proportion and FDR estimates](results/figures/estimator_diagnostics.png)
 
-Additional figures show [empirical FDR](results/figures/empirical_fdr.png) and [label sensitivity](results/figures/label_sensitivity.png). SVG versions in the same folder provide scalable figures. Error bars show 95% Monte Carlo intervals.
+Additional figures show [empirical FDR](results/figures/empirical_fdr.png) and [label sensitivity](results/figures/label_sensitivity.png). Error bars show 95% Monte Carlo intervals.
 
 ## Project structure
 
 ```text
 project2/
 ├── config/                 # full and smoke JSON designs
-├── data/simulated/         # optional full-vector cache; unused (seed regeneration instead)
-├── docs/                   # source audit, schema, validation record
+├── data/simulated/         # optional simulation cache
+├── docs/                   # output column guide
 ├── src/
 │   ├── dgps.py             # DGP and independent replicate streams
 │   ├── methods.py          # Storey estimates and BH

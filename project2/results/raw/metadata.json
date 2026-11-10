@@ -34,22 +34,22 @@
   "config_sha256": "e148fecc5b5ee721a29e59907b0ce2c873d46e19219c07a2a33115d59a04ec75",
   "source_sha256": {
     "src/__init__.py": "847bb1279bf7b6cdfe48ab6d70e1443b1ec106b1b8cb4c8531d4179b7dd8b552",
-    "src/analyze.py": "5d39d4c5151496b240922381ede6fbfe6cf7c6557e77badca90a5d05dc9aa526",
-    "src/dgps.py": "7e07918b6989d750c62ed01973e153b7b1a8b72f51a1e07adcdd09b508a41dee",
-    "src/figures.py": "f0af5a7af22861914d4df09db634f8256f4c907bda4951dd16cafcf27cbf7f9b",
-    "src/methods.py": "ce8670df5f02cdd936bfe9f40cc45aa9cf72146aa6d62316e0d152373a1c3e54",
-    "src/metrics.py": "b8437ddfd8b2ca595841589927f18ba1c18abd6f4b63ede8bee1b5fb2e19331c",
-    "src/simulation.py": "88981e9c1fdab19858f0f028325ef854e0c30602d506427938a26716af151b5b"
+    "src/analyze.py": "3e5568004a78f4bf0f1a9d22d031c1cb10fbd90038d711019058164734f59769",
+    "src/dgps.py": "cf97c6fd8867e670d5102c242196a17034aabea993e85e3a3e3d85dc7bed5d0a",
+    "src/figures.py": "af33465f823670a51c39ad9d6947484eb81739bcc87016902540877680cc739f",
+    "src/methods.py": "41df74cc2da8943793bb10ed18d0936484c6938cb2d70c84443ed246dd10c16e",
+    "src/metrics.py": "823a462c83235c9571ecc2e92bed299c03a267e619e7a46f983cab0f2f84eefc",
+    "src/simulation.py": "84d62173df9ace2d5b6e74fead17735e86ec4ee6327ce3befd8aa33ce627162c"
   },
-  "python": "3.13.12",
+  "python": "3.11.18",
   "versions": {
-    "numpy": "2.5.3",
-    "scipy": "1.18.1",
-    "pandas": "2.3.3",
-    "matplotlib": "3.11.2",
-    "pytest": "9.1.1"
+    "numpy": "2.0.0",
+    "scipy": "1.13.1",
+    "pandas": "2.2.2",
+    "matplotlib": "3.9.0",
+    "pytest": "8.3.0"
   },
-  "seconds": 5.388517666999974,
+  "seconds": 5.271673582999938,
   "rows": 120000,
   "raw_sha256": "d4a858ccfd5f5c36426af3e83003374432fa7354e9b4896ff1fef17e6772f835"
 }

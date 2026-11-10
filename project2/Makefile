@@ -2,21 +2,25 @@ PYTHON_BIN ?= python3
 VENV ?= .venv
 PYTHON ?= $(VENV)/bin/python
 REQUIREMENTS ?= requirements.txt
+ENV_READY := $(VENV)/.dependencies-ready
 CONFIG ?= config/study.json
 OUTPUT ?= results
 
 .PHONY: setup all simulate analyze figures clean test smoke
 
-setup:
-	"$(PYTHON_BIN)" -c 'import sys; sys.exit("Use Python 3.13 or newer: make setup PYTHON_BIN=python3.13") if sys.version_info < (3, 13) else None'
+setup: $(ENV_READY)
+
+$(ENV_READY): Makefile $(REQUIREMENTS)
+	"$(PYTHON_BIN)" -c 'import sys; sys.exit("Use Python 3.11 or newer: make all PYTHON_BIN=python3.11") if sys.version_info < (3, 11) else None'
 	"$(PYTHON_BIN)" -m venv "$(VENV)"
-	"$(VENV)/bin/python" -m pip install --only-binary=:all: -r "$(REQUIREMENTS)"
+	"$(VENV)/bin/python" -m pip install -r "$(REQUIREMENTS)"
 	"$(VENV)/bin/python" -m pip check
+	touch "$@"
 
 # Run targets sequentially even with make -j; analysis reads saved raw output.
 all: figures
 
-simulate:
+simulate: $(ENV_READY)
 	$(PYTHON) -m src.simulation --config "$(CONFIG)" --output "$(OUTPUT)"
 
 analyze: simulate
@@ -25,12 +29,13 @@ analyze: simulate
 figures: analyze
 	$(PYTHON) -m src.figures --output "$(OUTPUT)"
 
-test:
+test: $(ENV_READY)
 	$(PYTHON) -m pytest
 
 smoke:
 	$(MAKE) all CONFIG=config/smoke.json OUTPUT=tmp/smoke
 
-# Deliberately restricted to the documented default generated files. Preserves reference data.
 clean:
-	$(PYTHON) -c 'from pathlib import Path; import shutil; p=Path("results"); [shutil.rmtree(p/d) for d in ("raw", "figures") if (p/d).exists()]; [(p/f).unlink(missing_ok=True) for f in ("summary.csv", "diagnostics.csv", "paired_power.csv", "design_matrix.csv", "table2_comparison.csv", "pi0_expectation.csv")]; shutil.rmtree("tmp/smoke", ignore_errors=True)'
+	rm -rf results/raw results/figures tmp/smoke
+	rm -f results/summary.csv results/diagnostics.csv results/paired_power.csv \
+		results/design_matrix.csv results/table2_comparison.csv results/pi0_expectation.csv
