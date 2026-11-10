@@ -1,0 +1,34 @@
+[
+  {
+    "engine": "baseline",
+    "case": "study",
+    "warnings": {},
+    "error": null,
+    "rows": 120000,
+    "undefined_power_rows": 6000
+  },
+  {
+    "engine": "optimized",
+    "case": "study",
+    "warnings": {},
+    "error": null,
+    "rows": 120000,
+    "undefined_power_rows": 6000
+  },
+  {
+    "engine": "baseline",
+    "case": "small_tail",
+    "warnings": {},
+    "error": null,
+    "rows": 3600,
+    "undefined_power_rows": 180
+  },
+  {
+    "engine": "optimized",
+    "case": "small_tail",
+    "warnings": {},
+    "error": null,
+    "rows": 3600,
+    "undefined_power_rows": 180
+  }
+]

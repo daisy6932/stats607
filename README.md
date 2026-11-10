@@ -26,3 +26,8 @@ For a fresh run followed by an automatic comparison with the committed numerical
 ## Project 2 — Simulation Study
 
 See [`project2/`](project2/) for the Storey (2002) simulation reproduction, ADEMP design, critical analysis, figures, and tests. Run `make all` and `make test` inside that folder. The first run of `make all` creates the environment and installs dependencies.
+
+## Project 3 — Simulation Performance
+
+See [`project3/`](project3/) for the Storey simulation baseline, optimized
+engine, performance measurements, and regression tests.

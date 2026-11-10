@@ -1,0 +1,64 @@
+         1124149 function calls (1110713 primitive calls) in 1.704 seconds
+
+   Ordered by: cumulative time
+   List reduced from 573 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    1.704    1.704 performance.py:30(timed_study)
+        1    0.000    0.000    1.701    1.701 optimized.py:148(run_study)
+       20    0.001    0.000    1.698    0.085 optimized.py:133(run_group)
+       20    0.001    0.000    1.677    0.084 optimized.py:138(<listcomp>)
+      320    0.033    0.000    1.676    0.005 optimized.py:59(evaluate_batch)
+      320    0.083    0.000    0.892    0.003 optimized.py:39(bh_counts)
+     1920    0.001    0.000    0.627    0.000 fromnumeric.py:51(_wrapfunc)
+     1280    0.001    0.000    0.595    0.000 fromnumeric.py:1085(argsort)
+     1280    0.594    0.000    0.594    0.000 {method 'argsort' of 'numpy.ndarray' objects}
+      320    0.161    0.001    0.568    0.002 optimized.py:25(generate_batch)
+      320    0.032    0.000    0.280    0.001 _distn_infrastructure.py:2128(sf)
+      320    0.000    0.000    0.198    0.001 _continuous_distns.py:374(_sf)
+      320    0.003    0.000    0.198    0.001 _continuous_distns.py:320(_norm_sf)
+      320    0.195    0.001    0.195    0.001 _continuous_distns.py:308(_norm_cdf)
+     1280    0.159    0.000    0.164    0.000 _shape_base_impl.py:57(take_along_axis)
+    20000    0.075    0.000    0.126    0.000 dgps.py:7(replicate_rng)
+      320    0.001    0.000    0.126    0.000 frame.py:694(__init__)
+      320    0.001    0.000    0.123    0.000 construction.py:423(dict_to_mgr)
+      320    0.002    0.000    0.099    0.000 construction.py:96(arrays_to_mgr)
+      320    0.004    0.000    0.045    0.000 construction.py:596(_homogenize)
+      320    0.001    0.000    0.045    0.000 managers.py:2121(create_block_manager_from_column_arrays)
+    20000    0.040    0.000    0.045    0.000 _ufunc_config.py:434(inner)
+     7360    0.011    0.000    0.040    0.000 construction.py:517(sanitize_array)
+      320    0.000    0.000    0.031    0.000 fromnumeric.py:2609(cumsum)
+      320    0.031    0.000    0.031    0.000 {method 'cumsum' of 'numpy.ndarray' objects}
+     2880    0.031    0.000    0.031    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+      960    0.000    0.000    0.031    0.000 _function_base_impl.py:1920(place)
+      960    0.031    0.000    0.031    0.000 {built-in method numpy._core._multiarray_umath._place}
+      320    0.001    0.000    0.028    0.000 managers.py:1782(_consolidate_inplace)
+195459/195119    0.012    0.000    0.023    0.000 {built-in method builtins.isinstance}
+
+
+         1124149 function calls (1110713 primitive calls) in 1.704 seconds
+
+   Ordered by: internal time
+   List reduced from 573 to 20 due to restriction <20>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     1280    0.594    0.000    0.594    0.000 {method 'argsort' of 'numpy.ndarray' objects}
+      320    0.195    0.001    0.195    0.001 _continuous_distns.py:308(_norm_cdf)
+      320    0.161    0.001    0.568    0.002 optimized.py:25(generate_batch)
+     1280    0.159    0.000    0.164    0.000 _shape_base_impl.py:57(take_along_axis)
+      320    0.083    0.000    0.892    0.003 optimized.py:39(bh_counts)
+    20000    0.075    0.000    0.126    0.000 dgps.py:7(replicate_rng)
+    20000    0.040    0.000    0.045    0.000 _ufunc_config.py:434(inner)
+      320    0.033    0.000    1.676    0.005 optimized.py:59(evaluate_batch)
+      320    0.032    0.000    0.280    0.001 _distn_infrastructure.py:2128(sf)
+      320    0.031    0.000    0.031    0.000 {method 'cumsum' of 'numpy.ndarray' objects}
+     2880    0.031    0.000    0.031    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+      960    0.031    0.000    0.031    0.000 {built-in method numpy._core._multiarray_umath._place}
+     8960    0.013    0.000    0.021    0.000 _stride_tricks_impl.py:349(_broadcast_to)
+195459/195119    0.012    0.000    0.023    0.000 {built-in method builtins.isinstance}
+     7360    0.011    0.000    0.040    0.000 construction.py:517(sanitize_array)
+      320    0.008    0.000    0.009    0.000 _distn_infrastructure.py:982(_open_support_mask)
+     4838    0.006    0.000    0.006    0.000 {built-in method numpy.asarray}
+      960    0.005    0.000    0.014    0.000 managers.py:2276(_merge_blocks)
+      320    0.005    0.000    0.017    0.000 managers.py:2190(_form_blocks)
+    36581    0.004    0.000    0.009    0.000 generic.py:42(_instancecheck)
