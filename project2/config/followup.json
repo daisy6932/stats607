@@ -1,0 +1,19 @@
+{
+  "seed": 6072027,
+  "m": 1000,
+  "effect": 2.0,
+  "replicates": 10000,
+  "lambda": 0.5,
+  "gammas": [
+    0.001
+  ],
+  "pi0_values": [
+    0.8
+  ],
+  "modes": [
+    "fixed",
+    "iid"
+  ],
+  "boundary_pi0": [],
+  "baseline_alpha": 0.05
+}

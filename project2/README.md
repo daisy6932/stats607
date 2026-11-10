@@ -39,6 +39,15 @@ minimums) and 3.15.2. A full study run takes about 8–15 seconds after setup.
 defines the conditions. In each replicate the paper's BH comparator uses Storey's
 FDR estimate as its input level. The study also includes BH at a fixed level of 0.05.
 
+To rerun the 10,000-replicate check at π₀ = 0.8 and γ = 0.001:
+
+```bash
+make analyze CONFIG=config/followup.json OUTPUT=tmp/followup
+```
+
+The BH power and Monte Carlo standard errors are in `tmp/followup/summary.csv`
+(rows with `method=bh_estimated` and `metric=power`).
+
 ## Outputs
 
 - [Critical analysis](ANALYSIS.md)
