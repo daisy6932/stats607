@@ -31,11 +31,9 @@ def load_config(path):
         raise ValueError("effect must be finite")
     for field in ("pi0_values", "boundary_pi0"):
         values = config[field]
-        if len(values) != len(set(values)) or any(
-            not 0 <= pvalues <= 1 for pvalues in values
-        ):
+        if len(values) != len(set(values)) or any(not 0 <= pi0 <= 1 for pi0 in values):
             raise ValueError(f"invalid or duplicate {field}")
-        if any(not np.isclose(1000 * pvalues, round(1000 * pvalues)) for pvalues in values):
+        if any(not np.isclose(1000 * pi0, round(1000 * pi0)) for pi0 in values):
             raise ValueError("pi0 seed keys require a grid with resolution 0.001")
     if not config["pi0_values"] or not config["modes"] or not config["gammas"]:
         raise ValueError("design axes must be nonempty")
@@ -142,12 +140,12 @@ def main():
     path = out / "replicates.csv.gz"
     metadata_path = out / "metadata.json"
     hashes = {
-        str(pvalues): hashlib.sha256(pvalues.read_bytes()).hexdigest()
-        for pvalues in sorted(Path("src").glob("*.py"))
+        str(source_path): hashlib.sha256(source_path.read_bytes()).hexdigest()
+        for source_path in sorted(Path("src").glob("*.py"))
     }
     versions = {
-        pvalues: importlib.metadata.version(pvalues)
-        for pvalues in ("numpy", "scipy", "pandas", "matplotlib", "pytest")
+        package: importlib.metadata.version(package)
+        for package in ("numpy", "scipy", "pandas", "matplotlib", "pytest")
     }
     if not args.force and path.exists() and metadata_path.exists():
         previous = json.loads(metadata_path.read_text())
