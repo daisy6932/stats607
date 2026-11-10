@@ -53,7 +53,9 @@ def run_full(engine, config_path, workers):
                 module, cwd = "optimized", ROOT
             args = [sys.executable, "-W", "always", "-m", module, "--output", temporary]
             if stage == "simulate":
-                args += ["--config", str(config_path), "--force"]
+                args += ["--config", str(config_path)]
+                if engine == "baseline":
+                    args += ["--force"]
                 if engine == "optimized":
                     args += ["--workers", str(workers)]
             start = time.perf_counter()
@@ -62,7 +64,8 @@ def run_full(engine, config_path, workers):
             if completed.returncode:
                 raise RuntimeError(f"{engine} {stage} failed:\n{completed.stderr}")
             timings[f"{stage}_warnings"] = [
-                line.strip() for line in completed.stderr.splitlines()
+                line.strip()
+                for line in completed.stderr.splitlines()
                 if "Warning:" in line or "RuntimeWarning" in line
             ]
     timings["total"] = sum(timings[stage] for stage in ("simulate", "analyze", "figures"))
@@ -77,7 +80,7 @@ def profile(engine, config, output):
     stats = pstats.Stats(profiler, stream=stream)
     stats.strip_dirs().sort_stats("cumulative").print_stats(30)
     stats.sort_stats("tottime").print_stats(20)
-    (output / f"profile_{engine}.txt").write_text(stream.getvalue())
+    (output / f"profile_{engine}.txt").write_text(stream.getvalue().rstrip() + "\n")
 
 
 def complexity(engines, config, trials, output):
@@ -88,10 +91,11 @@ def complexity(engines, config, trials, output):
     reduced = dict(config, pi0_values=[0.2, 0.8], boundary_pi0=[], replicates=100)
     for size in SIZES:
         for trial in range(trials):
-            for engine in engines[::(-1 if trial % 2 else 1)]:
+            for engine in engines[:: (-1 if trial % 2 else 1)]:
                 elapsed, _ = timed_study(engine, dict(reduced, m=size))
-                rows.append({"engine": engine, "m": size, "trial": trial + 1,
-                             "seconds": elapsed})
+                rows.append(
+                    {"engine": engine, "m": size, "trial": trial + 1, "seconds": elapsed}
+                )
     measurements = pd.DataFrame(rows)
     measurements.to_csv(output / "complexity.csv", index=False)
     slopes = {}
@@ -106,8 +110,10 @@ def stability(engines, config, output):
     records = []
     for name, settings in (
         ("study", config),
-        ("small_tail", dict(config, m=2000, replicates=30,
-                            gammas=[1e-12, 1e-8], effect=12.0)),
+        (
+            "small_tail",
+            dict(config, m=2000, replicates=30, gammas=[1e-12, 1e-8], effect=12.0),
+        ),
     ):
         for engine in engines:
             result = None
@@ -122,11 +128,18 @@ def stability(engines, config, output):
             for warning in observed:
                 key = f"{warning.category.__name__}: {warning.message}"
                 counts[key] = counts.get(key, 0) + 1
-            records.append({
-                "engine": engine, "case": name, "warnings": counts, "error": error,
-                "rows": None if result is None else len(result),
-                "undefined_power_rows": None if result is None else int(result.power.isna().sum()),
-            })
+            records.append(
+                {
+                    "engine": engine,
+                    "case": name,
+                    "warnings": counts,
+                    "error": error,
+                    "rows": None if result is None else len(result),
+                    "undefined_power_rows": None
+                    if result is None
+                    else int(result.power.isna().sum()),
+                }
+            )
     (output / "stability.json").write_text(json.dumps(records, indent=2) + "\n")
     if any(record["error"] for record in records):
         raise RuntimeError("A stability run failed; see stability.json")
@@ -142,7 +155,7 @@ def benchmark(engines, config_path, trials, output):
         run_full("baseline", warmup, 1)
     runs = []
     for trial in range(trials):
-        for engine in engines[::(-1 if trial % 2 else 1)]:
+        for engine in engines[:: (-1 if trial % 2 else 1)]:
             result = run_full(engine, config_path, 1)
             runs.append({"engine": engine, "trial": trial + 1, **result})
     medians = {
@@ -160,7 +173,7 @@ def parallel_scaling(config, trials, output):
     """Time the optimized in-memory study including pool startup and output transfer."""
     rows = []
     for trial in range(trials):
-        for workers in WORKERS[::(-1 if trial % 2 else 1)]:
+        for workers in WORKERS[:: (-1 if trial % 2 else 1)]:
             elapsed, _ = timed_study("optimized", config, workers)
             rows.append({"workers": workers, "trial": trial + 1, "seconds": elapsed})
     pd.DataFrame(rows).to_csv(output / "parallel.csv", index=False)
@@ -169,9 +182,13 @@ def parallel_scaling(config, trials, output):
 def main():
     """Dispatch one experiment and save environment details with the measurements."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("task", choices=("profile", "complexity", "benchmark",
-                                        "stability", "scaling", "baseline"))
-    parser.add_argument("--engine", choices=("baseline", "optimized", "both"), default="both")
+    parser.add_argument(
+        "task",
+        choices=("profile", "complexity", "benchmark", "stability", "scaling", "baseline"),
+    )
+    parser.add_argument(
+        "--engine", choices=("baseline", "optimized", "both"), default="both"
+    )
     parser.add_argument("--config", type=Path, default=ROOT / "config/study.json")
     parser.add_argument("--output", type=Path, default=ROOT / "results")
     parser.add_argument("--trials", type=int, default=3)
@@ -184,23 +201,35 @@ def main():
     config = load_config(config_path)
     engines = ("baseline", "optimized") if args.engine == "both" else (args.engine,)
     if args.task in ("profile", "baseline"):
-        for engine in (("baseline",) if args.task == "baseline" else engines):
+        for engine in ("baseline",) if args.task == "baseline" else engines:
             profile(engine, config, output)
     if args.task in ("complexity", "baseline"):
-        complexity(("baseline",) if args.task == "baseline" else engines,
-                   config, args.trials, output)
+        complexity(
+            ("baseline",) if args.task == "baseline" else engines,
+            config,
+            args.trials,
+            output,
+        )
     if args.task in ("benchmark", "baseline"):
-        benchmark(("baseline",) if args.task == "baseline" else engines,
-                  config_path, args.trials, output)
+        benchmark(
+            ("baseline",) if args.task == "baseline" else engines,
+            config_path,
+            args.trials,
+            output,
+        )
     if args.task in ("stability", "baseline"):
         stability(("baseline",) if args.task == "baseline" else engines, config, output)
     if args.task == "scaling":
         parallel_scaling(config, args.trials, output)
     environment = {
-        "baseline_commit": BASELINE_COMMIT, "python": platform.python_version(),
-        "platform": platform.platform(), "logical_cpus": os.cpu_count(),
-        "packages": {package: importlib.metadata.version(package)
-                     for package in ("numpy", "scipy", "pandas", "matplotlib")},
+        "baseline_commit": BASELINE_COMMIT,
+        "python": platform.python_version(),
+        "platform": platform.platform(),
+        "logical_cpus": os.cpu_count(),
+        "packages": {
+            package: importlib.metadata.version(package)
+            for package in ("numpy", "scipy", "pandas", "matplotlib")
+        },
     }
     (output / "environment.json").write_text(json.dumps(environment, indent=2) + "\n")
 
