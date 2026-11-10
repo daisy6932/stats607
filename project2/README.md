@@ -25,8 +25,7 @@ make test
 Use Python 3.11 or later. `make all` creates `.venv`, installs dependencies,
 and runs the study. Select an interpreter with `make all PYTHON_BIN=python3.11`.
 
-Clean runs passed on macOS ARM64 with Python 3.11.18 (at the dependency
-minimums) and 3.15.2. A full study run takes about 8–15 seconds after setup.
+Clean runs passed on macOS ARM64 with Python 3.11.18 and 3.15.2. A full study run takes about 8–15 seconds after setup.
 
 | Command | Output |
 |---|---|
