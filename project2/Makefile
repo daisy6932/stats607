@@ -1,8 +1,17 @@
-PYTHON ?= python3
+PYTHON_BIN ?= python3
+VENV ?= .venv
+PYTHON ?= $(VENV)/bin/python
+REQUIREMENTS ?= requirements.txt
 CONFIG ?= config/study.json
 OUTPUT ?= results
 
-.PHONY: all simulate analyze figures clean test smoke
+.PHONY: setup all simulate analyze figures clean test smoke
+
+setup:
+	"$(PYTHON_BIN)" -c 'import sys; sys.exit("Use Python 3.13 or newer: make setup PYTHON_BIN=python3.13") if sys.version_info < (3, 13) else None'
+	"$(PYTHON_BIN)" -m venv "$(VENV)"
+	"$(VENV)/bin/python" -m pip install --only-binary=:all: -r "$(REQUIREMENTS)"
+	"$(VENV)/bin/python" -m pip check
 
 # Run targets sequentially even with make -j; analysis reads saved raw output.
 all: figures

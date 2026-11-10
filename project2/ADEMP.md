@@ -1,12 +1,12 @@
 # ADEMP: reproducing Storey's independent normal simulation
 
-Design frozen before implementation, 2026-10-15. Option A, using a paper on the supplied list. This is a scoped reproduction of Section 5, Table 2 and Figure 1, not the entire paper.
+Design frozen before implementation, 2026-10-15. Option A, using a paper on the supplied list. The reproduction covers Section 5, Table 2 and Figure 1.
 
 ## Sources and interpretation
 
 Storey, J. D. (2002). *A direct approach to false discovery rates*. JRSS B 64(3), 479–498. [Paper](https://genomics.princeton.edu/storeylab/papers/directfdr.pdf), Sections 3–5, pp. 483–487; [author's errata](https://genomics.princeton.edu/storeylab/papers/directfdr_corrections.pdf), dated 2003-04-16. Original numerical targets are transcribed in `results/reference/table2.csv` before running the study.
 
-Section 5 sets the fraction of nulls to pi0; the errata specify iid Bernoulli hypothesis labels for the theoretical model. We interpret Section 5 as fixed counts for the primary reproduction and explicitly examine iid labels separately. This is a documented ambiguity, not a claim to know the original random generator. Original seeds, code, and the definition of the reported BH cutoff are unavailable in the paper.
+Section 5 sets the fraction of nulls to pi0; the errata specify iid Bernoulli hypothesis labels for the theoretical model. The main analysis fixes the number of nulls. The sensitivity analysis draws null labels independently, following the errata. Section 5 does not specify the seed or how the BH cutoff was recorded.
 
 ## A — Aims
 
@@ -60,12 +60,12 @@ Numerical exceptions abort the run with the affected condition/replicate; no sil
 
 ## P — Performance measures and reporting
 
-Save replicate-level counts, power, FDP, cutoff, pi0 estimates, FDR/pFDR estimates, and seed keys before any aggregation. Average replicate metrics; MCSE=sample SD/sqrt(valid replicate count); pointwise 95% Monte Carlo intervals use mean +/- 1.96*MCSE. These describe simulation precision, not patient-level intervals or simultaneous bands. Report power differences using paired replicate differences, not independent standard errors. Report pi0 and FDR estimator bias and RMSE against known targets. For empirical pFDR use only R>0 replicates and state that denominator.
+Save replicate-level counts, power, FDP, cutoff, pi0 estimates, FDR/pFDR estimates, and seed keys before any aggregation. Average replicate metrics; MCSE=sample SD/sqrt(valid replicate count); pointwise 95% Monte Carlo intervals use mean +/- 1.96*MCSE. Compute uncertainty for power differences from the differences within each replicate. Report pi0 and FDR estimator bias and RMSE against known targets. For empirical pFDR use only R>0 replicates and state that denominator.
 
-Compare primary means to rounded Table 2 values, retaining differences and MCSE. The original run has its own unreported Monte Carlo error; do not use exact agreement as a pass/fail test. Do not tune seeds to match published numbers.
+Compare primary means to rounded Table 2 values, retaining differences and MCSE. The paper reports rounded means without Monte Carlo standard errors.
 
 Planned figures: (1) primary power versus pi0, faceted by gamma, with pointwise Monte Carlo intervals and original Table 2 points; (2) diagnostic pi0 bias and FDR estimation bias, showing uncertainty and known targets; (3) empirical FDR and iid sensitivity as additional context. Required tests cover known normal/power identities, DGP label counts, BH step-up edge cases, estimator arithmetic/zero rejections, analytic FDR, raw output validity, and exact same-seed reproduction.
 
 ## Reproducibility and scope
 
-`make all` runs simulation, analysis, and figures; `make test` runs pytest. Config, seed, dependency versions, elapsed time and source hashes are recorded with raw outputs. Raw compressed CSV is authoritative; summaries derive from it. Figure intervals are not the paper's bootstrap uncertainty intervals. Section 9 adaptive lambda, dependent tests, heterogeneous effects, and full q-value estimation are outside this reproduction. Critical analysis must distinguish reproduced findings from these omissions and extensions.
+`make all` runs simulation, analysis, and figures; `make test` runs pytest. Config, seed, dependency versions, elapsed time and source hashes are recorded with raw outputs. Raw compressed CSV is authoritative; summaries derive from it. The simulation holds lambda fixed and uses independent tests with a common alternative effect.

@@ -6,6 +6,7 @@ from scipy.stats import norm
 
 
 def rejection_metrics(reject, is_null):
+    """Count true and false rejections and calculate FDP and power."""
     reject, is_null = np.asarray(reject, bool), np.asarray(is_null, bool)
     if reject.shape != is_null.shape or reject.ndim != 1:
         raise ValueError("rejections and null labels must be matching vectors")
@@ -18,6 +19,7 @@ def rejection_metrics(reject, is_null):
 
 
 def analytic_targets(m, pi0, gamma, effect, mode):
+    """Calculate fixed-threshold benchmarks under fixed or random null labels."""
     power = float(norm.sf(norm.isf(gamma) - effect))
     if mode == "iid":
         q = pi0 * gamma + (1 - pi0) * power

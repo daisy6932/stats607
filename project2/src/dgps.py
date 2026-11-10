@@ -5,12 +5,13 @@ from scipy.stats import norm
 
 
 def replicate_rng(seed, mode, pi0, replicate):
-    """The two gamma conditions intentionally share each generated dataset."""
+    """Create the random stream for one dataset, shared across gamma thresholds."""
     key = [seed, {"fixed": 0, "iid": 1}[mode], round(1000 * pi0), replicate]
     return np.random.Generator(np.random.PCG64(np.random.SeedSequence(key)))
 
 
 def generate_normal_tests(rng, m, pi0, effect=2.0, mode="fixed"):
+    """Return one-sided normal p-values and a Boolean mask of true nulls."""
     if not isinstance(m, int) or m < 1 or not 0 <= pi0 <= 1:
         raise ValueError("m must be a positive integer and pi0 in [0,1]")
     if not np.isfinite(effect):

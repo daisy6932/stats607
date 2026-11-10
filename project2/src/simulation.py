@@ -56,6 +56,7 @@ def design_groups(cfg):
 
 
 def run_study(cfg):
+    """Return one row per replicate, threshold, and method from the study configuration."""
     rows = []
     for mode, pi0, role in design_groups(cfg):
         LOG.info("%s pi0=%.3f: %d replicates", mode, pi0, cfg["replicates"])
@@ -64,13 +65,13 @@ def run_study(cfg):
                 rng = replicate_rng(cfg["seed"], mode, pi0, rep)
                 p, is_null = generate_normal_tests(rng, cfg["m"], pi0, cfg["effect"], mode)
                 for gamma in cfg["gammas"]:
-                    fixed, estimates = storey_fixed(p, gamma, cfg["lambda"])
-                    matched, cutoff = bh(p, estimates["fdr_hat"])
-                    baseline, baseline_cutoff = bh(p, cfg["baseline_alpha"])
+                    storey_reject, estimates = storey_fixed(p, gamma, cfg["lambda"])
+                    bh_at_estimated_fdr, estimated_cutoff = bh(p, estimates["fdr_hat"])
+                    bh_at_fixed_level, baseline_cutoff = bh(p, cfg["baseline_alpha"])
                     for method, reject, cut, alpha in (
-                        ("storey_fixed", fixed, gamma, np.nan),
-                        ("bh_estimated", matched, cutoff, estimates["fdr_hat"]),
-                        ("bh_fixed", baseline, baseline_cutoff, cfg["baseline_alpha"]),
+                        ("storey_fixed", storey_reject, gamma, np.nan),
+                        ("bh_estimated", bh_at_estimated_fdr, estimated_cutoff, estimates["fdr_hat"]),
+                        ("bh_fixed", bh_at_fixed_level, baseline_cutoff, cfg["baseline_alpha"]),
                     ):
                         rows.append({"mode": mode, "role": role, "pi0": pi0, "gamma": gamma,
                                      "replicate": rep, "seed": cfg["seed"], "m": cfg["m"],

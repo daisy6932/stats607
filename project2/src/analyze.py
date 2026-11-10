@@ -126,7 +126,10 @@ def main():
     path = out / "raw/replicates.csv.gz"
     if hashlib.sha256(path.read_bytes()).hexdigest() != metadata["raw_sha256"]:
         raise ValueError("raw file hash does not match metadata; regenerate the simulation")
-    raw = pd.read_csv(path, float_precision="round_trip")
+    # pandas 3.1 uses round-trip precision by default.
+    pandas_version = tuple(int(part) for part in pd.__version__.split(".")[:2])
+    csv_options = {"float_precision": "round_trip"} if pandas_version < (3, 1) else {}
+    raw = pd.read_csv(path, **csv_options)
     analyze(raw, cfg, out, args.reference)
     print(f"Validated and summarized {len(raw):,} raw rows in {out}")
 

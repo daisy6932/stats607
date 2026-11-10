@@ -42,3 +42,16 @@ The unresolved published BH entry is a documented reproduction difference, not a
 ## Public-access update — 2026-10-19
 
 At the user's explicit request, the repository was changed to PUBLIC. The GitHub API confirmed the new visibility. This resolves the public-repository requirement noted in the audits above. Course-site submission and separate ANALYSIS.md upload remain for the student.
+
+## Fresh environment checks — 2026-11-09
+
+Created separate project copies without virtual environments on macOS ARM64.
+On Python 3.13.12 and Python 3.15.2, `make setup`, `make clean`, `make all`,
+and `make test` succeeded. Both installations resolved NumPy 2.5.4, SciPy
+1.18.1, pandas 3.1.1, Matplotlib 3.11.2 and pytest 9.2.0. Each run generated
+120,000 raw rows and four figures; all 26 tests passed in each environment.
+
+The decompressed raw CSV matched the original byte for byte. All six summary
+CSVs matched numerically (relative tolerance 1e-12, absolute tolerance 1e-14).
+The revised code also reproduced those outputs and passed all 26 tests with
+the original locked Python 3.13.12 environment.

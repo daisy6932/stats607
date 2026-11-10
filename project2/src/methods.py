@@ -13,6 +13,7 @@ def validate_pvalues(p):
 
 
 def storey_fixed(p, gamma, tuning=0.5):
+    """Return the mask for p <= gamma and Storey estimates at tail threshold tuning."""
     p = validate_pvalues(p)
     if not 0 < gamma < 1 or not 0 <= tuning < 1:
         raise ValueError("gamma must be in (0,1), lambda in [0,1)")
@@ -31,6 +32,7 @@ def storey_fixed(p, gamma, tuning=0.5):
 
 
 def bh(p, alpha):
+    """Return the BH rejection mask and the largest rejected p-value (zero if none)."""
     p = validate_pvalues(p)
     if not np.isfinite(alpha) or not 0 <= alpha <= 1:
         raise ValueError("alpha must lie in [0,1]")
