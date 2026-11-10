@@ -16,8 +16,29 @@ The new power plot reproduces the paper's Figure 1 concept while overlaying orig
 
 ## Confidence, implementation and next steps
 
-The hardest part to verify was what BH receives in each replicate. Both FDR and pFDR estimates are valid inputs to the software, so a successful run would not expose a mix-up. Section 5 specifies the FDR estimate, and the four-p-value unit test separates the formulas: it gives 0.010 for FDR and about 0.254 for pFDR. I take that as a reason to check the quantity passed between methods as carefully as the final output.
+The part of the implementation I found hardest to get right was the level
+passed to BH, because a wrong choice does not fail. Section 5 gives BH the
+FDR estimate from the same replicate. The pFDR estimate divides that number
+by 1 − (1 − gamma)^m. At gamma=0.01 this factor is essentially one, so the
+two estimates agree and half of Table 2 looks correct either way. At
+gamma=0.001 the factor is 0.632 and the pFDR estimate is about 58% larger.
+I settled the question with the estimated-FDR column that Table 2 prints: at
+pi0=0.8 and gamma=0.001 the paper reports 0.030 and my FDR estimate averages
+0.0297, while my pFDR estimate averages 0.047. A unit test with four
+p-values, computed by hand, now keeps the two formulas apart. What I took
+from this is to check every printed column, not only the headline one, and
+to test at a setting where the candidate interpretations give different
+answers.
 
-I am confident in the main pattern for independent normal tests. The normal-tail calculation gives fixed-region power of about 0.372 and 0.138, and the simulated values agree. Most Table 2 values are close, and a small-case enumeration independently checks the FDR benchmark. At gamma=0.001, the published BH values at pi0=0.7 and 0.9 are 0.101 and 0.133. The follow-up result of about 0.1134 fits the progression between those rows more closely than the printed 0.129 does. This makes a reporting error plausible, but the table alone cannot establish one. A hand calculation can verify the formulas used here while still sharing the same interpretation of the paper. The original code and Monte Carlo uncertainty would help distinguish a reporting error from a difference in implementation.
-
-A stronger follow-up would compare power against achieved FDR across thresholds, using separate calibration simulations before evaluation, then add correlated tests and weaker heterogeneous signals. More replicates would improve precision for rare false discoveries.
+I am confident in the implementation under the stated design. Fixed-region
+power matches its closed-form value, the FDR benchmark matches an exact
+enumeration on a small example, and every BH power entry except one is
+within 0.003 of the printed value. For that one entry I was unsure whether
+the paper fixed the number of nulls or drew labels independently, as the
+errata describe, so I ran both; the follow-up above gives about 0.113 either
+way, which rules out both simulation noise and the labelling choice. The
+printed 0.129 also sits oddly between its neighbours, 0.101 and 0.133, so a
+misprint is possible, but without the original code I cannot confirm it.
+Two things could still undermine my confidence: I wrote both the code and
+its tests, so a shared misreading of the paper would pass them, and the
+results say nothing about correlated tests or weaker signals.
