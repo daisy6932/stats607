@@ -14,12 +14,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from performance import fit_complexity
+
 
 def plot_performance(directory):
     """Read timing files from directory and write the comparison figure there."""
     benchmark = json.loads((directory / "benchmark.json").read_text())
     complexity = pd.read_csv(directory / "complexity.csv")
-    slopes = json.loads((directory / "complexity_slopes.json").read_text())
+    fits = fit_complexity(complexity, directory)
     scaling = pd.read_csv(directory / "parallel.csv")
     colors = {"baseline": "#6A557A", "optimized": "#007A87"}
     fig, axes = plt.subplots(1, 3, figsize=(13.2, 4.5))
@@ -41,8 +43,9 @@ def plot_performance(directory):
     for engine, group in complexity.groupby("engine"):
         timing = group.groupby("m").seconds.agg(["median", "min", "max"])
         sizes, medians = timing.index.to_numpy(), timing["median"].to_numpy()
-        slope = slopes[engine]
-        intercept = (np.log(medians) - slope * np.log(sizes)).mean()
+        fitted = fits["engines"][engine]
+        slope, intercept = fitted["slope"], fitted["intercept"]
+        fit_sizes = np.asarray(fitted["sizes"])
         color = colors[engine]
         axes[1].errorbar(
             sizes,
@@ -54,7 +57,7 @@ def plot_performance(directory):
             markersize=4,
             label=f"{engine.capitalize()} (slope {slope:.2f})",
         )
-        axes[1].loglog(sizes, np.exp(intercept) * sizes**slope, "--", color=color)
+        axes[1].loglog(fit_sizes, np.exp(intercept) * fit_sizes**slope, "--", color=color)
     axes[1].set(
         title="Time as the number of tests grows",
         xlabel="Tests per dataset (m)",
@@ -83,7 +86,7 @@ def plot_performance(directory):
     fig.text(
         0.02,
         0.02,
-        f"Medians of {trials} runs. Middle panel: trial range and log-log fit. "
+        f"Medians of {trials} runs. Middle: trial range; log-log fits use m ≥ 2000. "
         "Process timings include pool startup and result transfer.",
         fontsize=9,
         color="#444444",

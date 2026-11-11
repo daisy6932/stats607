@@ -105,3 +105,27 @@ def test_cli_writes_raw_and_metadata(study_config, tmp_path):
         "baseline/src/dgps.py",
         "baseline/src/simulation.py",
     }
+
+
+def test_complexity_fit_uses_only_large_sizes(tmp_path):
+    """Small-size overhead must not affect the reported tail slope."""
+    from performance import fit_complexity
+
+    sizes = [250, 500, 1000, 2000, 4000, 8000]
+    data = pd.DataFrame(
+        {
+            "engine": ["baseline"] * 6,
+            "m": sizes,
+            "seconds": [9, 8, 7, 2, 4, 8],
+        }
+    )
+    report = fit_complexity(data, tmp_path)
+    assert report["engines"]["baseline"]["sizes"] == [2000, 4000, 8000]
+    assert report["engines"]["baseline"]["slope"] == pytest.approx(1)
+    data.loc[data.m < 2000, "seconds"] *= 100
+    updated = fit_complexity(data, tmp_path)
+    assert updated["engines"]["baseline"]["slope"] == report["engines"]["baseline"]["slope"]
+    assert (
+        updated["engines"]["baseline"]["full_range_slope"]
+        != report["engines"]["baseline"]["full_range_slope"]
+    )

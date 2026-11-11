@@ -5,6 +5,10 @@ It reuses each dataset's p-value ordering across BH levels and evaluates
 replicates in batches. The statistical design and replicate seed mapping carry
 over from Project 2. The regression tests compare every output row in the full study.
 
+On macOS ARM64, the full workflow fell from 7.08 to 5.17 seconds
+(1.37× speedup); in-memory computation fell from 3.34 to 1.41 seconds
+(2.37×). The benchmark data and measurement scopes are described below.
+
 - [Baseline measurements](docs/BASELINE.md)
 - [Optimization results and trade-offs](docs/OPTIMIZATION.md)
 - [Performance figure](results/comparison/performance.png)
@@ -37,11 +41,17 @@ results, tables and scientific figures to `tmp/study/`.
 | `make clean` | Remove generated study and performance outputs under `tmp/` |
 
 Timing outputs go to `tmp/performance/`. `TRIALS=3` is the default.
+On the measured Mac, `make performance` took 81 seconds (about 1.5 minutes)
+with dependencies already installed.
 The measured comparison in [results/comparison/](results/comparison/) includes
 individual trials and the Python and package versions. The performance figure
 can also be rebuilt from those files with
 `.venv/bin/python plot_performance.py results/comparison`.
 
-The frozen Project 2 source is under `baseline/`. The optimized engine is
-`optimized.py`; it writes the same raw schema so both engines use the same
-analysis and scientific figure code.
+The frozen Project 2 modules under `baseline/src/` are also runtime
+dependencies: the optimized engine reuses the seed construction and design
+configuration helpers, and both engines use the same analysis and scientific
+figure modules. Regression tests compare against the original BH implementation.
+The baseline study configuration and Table 2 reference are kept alongside those
+modules. Environment setup and experiment commands live in the Project 3
+Makefile and requirements file.

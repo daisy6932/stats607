@@ -83,10 +83,40 @@ def profile(engine, config, output):
     (output / f"profile_{engine}.txt").write_text(stream.getvalue().rstrip() + "\n")
 
 
-def complexity(engines, config, trials, output):
-    """Measure the same two scenarios per size and fit a log-log slope."""
+def fit_complexity(measurements, output):
+    """Fit log-log slopes using the three large sizes (m >= 2000).
+
+    Keep the full-range slopes alongside the fitted range so different
+    measurement runs and fitting choices can be distinguished.
+    """
     import numpy as np
 
+    fitted = {}
+    for engine, group in measurements.groupby("engine"):
+        medians = group.groupby("m").seconds.median()
+        tail = medians.loc[medians.index >= 2000]
+        if len(tail) < 3:
+            raise ValueError("Complexity fitting needs at least three sizes at m >= 2000")
+        slope, intercept = np.polyfit(np.log(tail.index), np.log(tail), 1)
+        fitted[engine] = {
+            "slope": float(slope),
+            "intercept": float(intercept),
+            "sizes": tail.index.tolist(),
+            "full_range_slope": float(
+                np.polyfit(np.log(medians.index), np.log(medians), 1)[0]
+            ),
+        }
+    report = {"fit_min_m": 2000, "engines": fitted}
+    (output / "complexity_fit.json").write_text(json.dumps(report, indent=2) + "\n")
+    (output / "complexity_slopes.json").write_text(
+        json.dumps({engine: result["slope"] for engine, result in fitted.items()}, indent=2)
+        + "\n"
+    )
+    return report
+
+
+def complexity(engines, config, trials, output):
+    """Measure the same two scenarios per size and fit a log-log slope."""
     rows = []
     reduced = dict(config, pi0_values=[0.2, 0.8], boundary_pi0=[], replicates=100)
     for size in SIZES:
@@ -98,11 +128,7 @@ def complexity(engines, config, trials, output):
                 )
     measurements = pd.DataFrame(rows)
     measurements.to_csv(output / "complexity.csv", index=False)
-    slopes = {}
-    for engine, group in measurements.groupby("engine"):
-        medians = group.groupby("m").seconds.median()
-        slopes[engine] = float(np.polyfit(np.log(medians.index), np.log(medians), 1)[0])
-    (output / "complexity_slopes.json").write_text(json.dumps(slopes, indent=2) + "\n")
+    fit_complexity(measurements, output)
 
 
 def stability(engines, config, output):
