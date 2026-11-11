@@ -54,13 +54,12 @@ give typical time `O(R G m log m)`; scans add `O(R G m)`. The
 replicate-level result table contains `3 R G` rows.
 
 I varied `m` from 250 to 8,000 using 100 replicates per design group,
-null proportions 0.2 and 0.8, and both label modes. The log-log slope
-of the median of three timings was 0.79 over this range. This was the initial
-baseline run; the later paired-comparison run gave 0.74 using the same
-full-range fit. The revised comparison figure fits only m >= 2,000. This is a
-finite-range measurement: seed construction, Python calls and output
-assembly add work that does not grow with `m`. It is not an estimate
-of the asymptotic sort exponent. See [raw timings](../results/baseline/complexity.csv).
+null proportions 0.2 and 0.8, and both label modes. Fitting the median of
+three timings at m = 2,000, 4,000 and 8,000 gives a log-log slope of 1.16.
+The full-range slope is 0.79; fixed overhead at small m pulls it below one.
+The three-point fit is sensitive to timing noise.
+See [raw timings](../results/baseline/complexity.csv) and
+[fit coefficients](../results/baseline/complexity_fit.json).
 
 ## Numerical observations
 
@@ -74,7 +73,4 @@ warnings while importing Matplotlib for figures; those are library
 API warnings, not numerical failures. The simulation and analysis
 subprocesses emitted no warnings. [Stability log](../results/baseline/stability.json).
 
-From `project3/`, the original measurements can be repeated with
-`python performance.py baseline --output tmp/baseline`. The current harness
-records the full-range slope in `complexity_fit.json` and the large-size
-slope in `complexity_slopes.json`.
+Run `make baseline` from `project3/` to repeat these measurements.

@@ -7,7 +7,7 @@ over from Project 2. The regression tests compare every output row in the full s
 
 On macOS ARM64, the full workflow fell from 7.08 to 5.17 seconds
 (1.37× speedup); in-memory computation fell from 3.34 to 1.41 seconds
-(2.37×). The benchmark data and measurement scopes are described below.
+(2.37×).
 
 - [Baseline measurements](docs/BASELINE.md)
 - [Optimization results and trade-offs](docs/OPTIMIZATION.md)
@@ -41,7 +41,7 @@ results, tables and scientific figures to `tmp/study/`.
 | `make clean` | Remove generated study and performance outputs under `tmp/` |
 
 Timing outputs go to `tmp/performance/`. `TRIALS=3` is the default.
-On the measured Mac, `make performance` took 81 seconds (about 1.5 minutes)
+On the measured Mac, `make performance` took 81 seconds
 with dependencies already installed.
 The measured comparison in [results/comparison/](results/comparison/) includes
 individual trials and the Python and package versions. The performance figure
@@ -53,5 +53,4 @@ dependencies: the optimized engine reuses the seed construction and design
 configuration helpers, and both engines use the same analysis and scientific
 figure modules. Regression tests compare against the original BH implementation.
 The baseline study configuration and Table 2 reference are kept alongside those
-modules. Environment setup and experiment commands live in the Project 3
-Makefile and requirements file.
+modules.

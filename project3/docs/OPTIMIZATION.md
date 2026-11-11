@@ -123,13 +123,6 @@ curve. A three-point fit over this finite range is a scaling diagnostic,
 not a proof of asymptotic complexity. With the number of gamma values
 fixed, both engines still have the same asymptotic order in m.
 
-The initial baseline experiment in BASELINE.md fitted all six sizes and
-gave 0.79. An independent baseline measurement in the paired comparison
-gave 0.74 with the same full-range fitting rule; its optimized slope was
-0.89. The two baseline numbers come from different timing trials, not
-different source code. The updated [fit metadata](../results/comparison/complexity_fit.json)
-records both the full-range slopes and the large-size fits used in the figure.
-
 The paired cProfile runs show 4.846 versus 1.704 seconds (2.84×) with
 profiling enabled. These instrumented times are separate from the
 unprofiled compute and complete-workflow timings reported above.
