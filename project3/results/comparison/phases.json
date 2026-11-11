@@ -1,0 +1,56 @@
+{
+  "runs": [
+    {
+      "engine": "baseline",
+      "trial": 1,
+      "compute": 3.330832834006287,
+      "csv_gzip_write": 1.5749071669997647,
+      "rows": 120000
+    },
+    {
+      "engine": "optimized",
+      "trial": 1,
+      "compute": 1.4438967499881983,
+      "csv_gzip_write": 1.5903742499940563,
+      "rows": 120000
+    },
+    {
+      "engine": "optimized",
+      "trial": 2,
+      "compute": 1.4041562909987988,
+      "csv_gzip_write": 1.6356425840058364,
+      "rows": 120000
+    },
+    {
+      "engine": "baseline",
+      "trial": 2,
+      "compute": 3.357515208001132,
+      "csv_gzip_write": 1.5857277500035707,
+      "rows": 120000
+    },
+    {
+      "engine": "baseline",
+      "trial": 3,
+      "compute": 3.3436388340051053,
+      "csv_gzip_write": 1.5889842920005322,
+      "rows": 120000
+    },
+    {
+      "engine": "optimized",
+      "trial": 3,
+      "compute": 1.4104386249964591,
+      "csv_gzip_write": 1.5937617080053315,
+      "rows": 120000
+    }
+  ],
+  "medians": {
+    "baseline": {
+      "compute": 3.3436388340051053,
+      "csv_gzip_write": 1.5857277500035707
+    },
+    "optimized": {
+      "compute": 1.4104386249964591,
+      "csv_gzip_write": 1.5937617080053315
+    }
+  }
+}

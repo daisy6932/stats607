@@ -27,6 +27,7 @@ results, tables and scientific figures to `tmp/study/`.
 |---|---|
 | `make profile` | Cumulative and self-time profiles for both engines |
 | `make complexity` | Timing trials as tests per dataset increase |
+| `make phases` | Separate in-memory computation from CSV/gzip writing |
 | `make benchmark` | Baseline and optimized timings for the complete workflow |
 | `make parallel WORKERS=2` | Complete study using two scenario workers, in `tmp/parallel-study/` |
 | `make stability-check` | Warning and exception counts for the main and small-tail designs |

@@ -11,7 +11,7 @@ WORKERS ?= 2
 STUDY_WORKERS ?= 1
 TRIALS ?= 3
 
-.PHONY: all setup simulate analyze figures test clean profile complexity benchmark parallel stability-check scaling performance baseline
+.PHONY: all setup simulate analyze figures test clean profile complexity benchmark parallel stability-check scaling performance baseline phases
 
 setup: $(READY)
 
@@ -36,7 +36,7 @@ figures: analyze
 test: $(READY)
 	"$(PYTHON)" -m pytest
 
-profile complexity benchmark scaling: $(READY)
+profile complexity benchmark scaling phases: $(READY)
 	"$(PYTHON)" performance.py $@ --config "$(CONFIG)" --output "$(PERF_OUTPUT)" --trials "$(TRIALS)"
 
 stability-check: $(READY)
@@ -50,7 +50,7 @@ parallel: $(READY)
 
 # Keep timed experiments sequential even if this target is invoked with make -j.
 performance: $(READY)
-	$(MAKE) -j1 benchmark complexity scaling
+	$(MAKE) -j1 benchmark complexity scaling phases
 	"$(PYTHON)" plot_performance.py "$(PERF_OUTPUT)"
 
 clean:

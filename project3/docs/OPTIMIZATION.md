@@ -1,11 +1,21 @@
 # Optimizing the Storey simulation
 
 The complete workflow went from **7.08 to 5.17 seconds** (1.37× speedup,
-27% less time). Simulation and raw output went from **5.43 to 3.51 seconds**.
-These are medians of three runs per version on the same macOS ARM64 machine
-and Python environment, with a fresh output directory for each trial. The
-comparison includes gzip writes, analysis and figure generation.
-[Timings and warnings](../results/comparison/benchmark.json) ·
+27% less time). The in-memory calculation improved by **2.37×**, from
+**3.34 to 1.41 seconds**, in a separate unprofiled timing experiment.
+CSV formatting, gzip compression and writing still took about **1.6 seconds**
+per run. Those costs, plus imports and the unchanged analysis and figures,
+explain why the whole workflow improved less than the computation.
+The paired cProfile runs show **4.846 to 1.704 seconds** (2.84×), with the
+additional cost of profiling included.
+
+Both timing experiments used medians of three runs per version on the same
+macOS ARM64 machine and Python environment. Full-workflow trials used separate
+subprocesses and fresh output directories. The phase experiment measured the
+in-memory call and then timed writing that result to a compressed CSV; its
+computation timing excludes imports and file output.
+[Whole-workflow timings](../results/comparison/benchmark.json) ·
+[Compute and write timings](../results/comparison/phases.json) ·
 [Performance figure](../results/comparison/performance.png)
 
 ## Reuse the ordering for BH
@@ -36,7 +46,13 @@ building the result table. This takes the number of dataset sorts from
 fell from **1.354 to 0.595 seconds** (including any sorts outside BH).
 The sort term changes from `O(R G m log m)` to `O(R m log m)`; scanning the
 levels still takes `O(R G m)`. The prefix table uses extra temporary memory
-but avoids rebuilding and summing rejection masks for every BH level.
+but avoids rebuilding and summing rejection masks for every BH level. The cost is readability:
+`bh_counts` works with row sorting, prefix counts and rank-indexed lookups,
+whereas the original `bh` returns a simple rejection mask. Handling a zero
+selected rank and aligning the null prefix with that rank require particular
+care. Keeping the frozen baseline also means maintaining two BH
+implementations with the same semantics. The exact row comparisons and
+tied-p-value tests make mismatches visible when the optimized code changes.
 
 ## Evaluate replicates in batches
 
@@ -90,7 +106,7 @@ is modest because each task is already short and each process needs its own
 imports and memory. I kept serial as the default and exposed the process
 version with `make parallel WORKERS=4`.
 
-## Scaling, correctness and lessons
+## Scaling and correctness
 
 The [log-log comparison](../results/comparison/performance.png) varies the
 number of tests from 250 to 8,000. The optimized version was faster at all
@@ -109,8 +125,29 @@ produced zero numerical warnings and exceptions in the
 retains the baseline's `log1p`/`expm1` calculation and the same convention
 for undefined power.
 
-The best return came from removing repeated work before adding workers.
-The [paired profiles](../results/comparison/) show 4.846 versus 1.704 seconds
-with profiling enabled; that is a different scope from the wall-time
-benchmark. Once the simulation was faster, file writing and the unchanged
-analysis and figures limited the reduction in total time.
+## Lessons learned
+
+Removing repeated sorting and batching the array work gave the best return.
+The unprofiled computation time fell by nearly two seconds without changing
+a single output value. The trade-off is more complicated indexing and array
+shapes; that is why the small BH edge cases matter alongside the full-study
+regression.
+
+The shift in the bottleneck was more surprising than the total speedup.
+Formatting and writing the same 120,000 rows took 1.59 seconds after
+optimization, slightly longer than the 1.41-second calculation. Making the
+numerical part faster again would leave most of that work untouched.
+Before adding more computational machinery, I would profile CSV formatting
+and gzip separately and check whether a different storage format is worth
+losing the convenience of a readable CSV.
+
+Four workers saved about 0.32 seconds over optimized serial computation,
+despite adding process startup, data transfer and separate copies of the
+working arrays. Two workers saved only about 0.06 seconds. For this study,
+that is a small return for the extra deployment and debugging burden, so
+serial remains the default. Parallel execution would be worth reconsidering
+if scenarios were larger or more expensive. It does not replace the
+simpler gains from eliminating repeated work.
+
+To repeat the phase measurement, run `make phases`; the output is
+`tmp/performance/phases.json`.

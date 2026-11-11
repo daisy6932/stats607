@@ -169,6 +169,46 @@ def benchmark(engines, config_path, trials, output):
     (output / "benchmark.json").write_text(json.dumps(report, indent=2) + "\n")
 
 
+def phase_timings(engines, config, trials, output):
+    """Separate in-memory computation from CSV formatting, gzip and disk writing."""
+    importlib.import_module("optimized")
+    warmup = dict(config, replicates=2)
+    for engine in engines:
+        timed_study(engine, warmup)
+    rows = []
+    with tempfile.TemporaryDirectory(prefix="storey-phase-") as temporary:
+        archive = Path(temporary) / "replicates.csv.gz"
+        for trial in range(trials):
+            for engine in engines[:: (-1 if trial % 2 else 1)]:
+                elapsed, result = timed_study(engine, config)
+                start = time.perf_counter()
+                result.to_csv(
+                    archive,
+                    index=False,
+                    float_format="%.17g",
+                    compression={"method": "gzip", "mtime": 0},
+                )
+                rows.append(
+                    {
+                        "engine": engine,
+                        "trial": trial + 1,
+                        "compute": elapsed,
+                        "csv_gzip_write": time.perf_counter() - start,
+                        "rows": len(result),
+                    }
+                )
+    medians = {
+        engine: {
+            phase: statistics.median(row[phase] for row in rows if row["engine"] == engine)
+            for phase in ("compute", "csv_gzip_write")
+        }
+        for engine in engines
+    }
+    (output / "phases.json").write_text(
+        json.dumps({"runs": rows, "medians": medians}, indent=2) + "\n"
+    )
+
+
 def parallel_scaling(config, trials, output):
     """Time the optimized in-memory study including pool startup and output transfer."""
     rows = []
@@ -184,7 +224,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "task",
-        choices=("profile", "complexity", "benchmark", "stability", "scaling", "baseline"),
+        choices=(
+            "profile",
+            "complexity",
+            "benchmark",
+            "stability",
+            "scaling",
+            "baseline",
+            "phases",
+        ),
     )
     parser.add_argument(
         "--engine", choices=("baseline", "optimized", "both"), default="both"
@@ -219,6 +267,8 @@ def main():
         )
     if args.task in ("stability", "baseline"):
         stability(("baseline",) if args.task == "baseline" else engines, config, output)
+    if args.task == "phases":
+        phase_timings(engines, config, args.trials, output)
     if args.task == "scaling":
         parallel_scaling(config, args.trials, output)
     environment = {
